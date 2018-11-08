@@ -10,11 +10,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.mdwbp.dao.UsersDAO;
 import com.mdwbp.entity.Users;
 
+
 @Controller
 public class BaseController {
 	
 	@Autowired
-	UsersDAO userDAO;
+	private UsersDAO userserv;
 
 	@RequestMapping(value = "/homepage")
 	public String getHomePage() {
@@ -24,7 +25,7 @@ public class BaseController {
 	@RequestMapping(value = "/storeData", method = RequestMethod.POST)
 	public String storeData(HttpServletRequest request) {
 		System.out.println(request.getParameter("fname"));
-		userDAO.save(new Users(0,request.getParameter("fname")));
+		userserv.saveUser(new Users(0, request.getParameter("fname")));
 		return "redirect:homepage";
 	}
 }

@@ -1,27 +1,21 @@
 package com.mdwbp.dao.impl;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import com.mdwbp.dao.UsersDAO;
 import com.mdwbp.entity.Users;
+import com.mdwbp.repo.UsersRepo;
 
-@Repository
-public class UserDAOImpl implements UsersDAO {
-
+@Service
+public class UserDAOImpl implements UsersDAO{
+	
 	@Autowired
-	SessionFactory sessionFactory;
+	private UsersRepo userRepo;
 
 	@Override
-	public boolean save(Users user) {
-		Session session = sessionFactory.openSession();
-		session.beginTransaction();
-		session.persist(user);
-		session.getTransaction().commit();
-		session.close();
-		return false;
+	public void saveUser(Users user) {
+		userRepo.save(user);
 	}
 
 }
