@@ -8,8 +8,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.stereotype.Component;
+@Component
 @Entity
-@Table(name = "myuser")
+@Table(name = "bootuser")
 public class Users implements Serializable{
 	/**
 	 * 

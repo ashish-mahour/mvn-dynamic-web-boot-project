@@ -14,9 +14,8 @@
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
                 
         <wb-resource deploy-path="/" source-path="/src/main/webapp"/>
-                
         <property name="java-output-path" value="/mvn-dynamic-web-boot-project/target/classes"/>
-        <property name="context-root" value="/"/>
+        <property name="context-root" value="mvn-dynamic-web-boot-project"/>
                     
     
     </wb-module>
