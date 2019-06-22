@@ -3,6 +3,8 @@ package com.mdwbp.controller;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
@@ -11,6 +13,10 @@ import javax.servlet.http.Part;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +27,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mdwbp.dao.UsersDAO;
-import com.mdwbp.dtos.User;
 import com.mdwbp.entity.Users;
+
 @Component
 @RestController
 public class BaseController {
@@ -60,7 +66,7 @@ public class BaseController {
 		return "redirect:homepage";
 	}
 
-	@RequestMapping(value="/api/getdata",method=RequestMethod.POST)
+	@RequestMapping(value = "/api/getdata", method = RequestMethod.POST)
 	public ResponseEntity<?> getData(@RequestBody String data) {
 		try {
 			JSONObject json = new JSONObject(data);
@@ -68,6 +74,22 @@ public class BaseController {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		return new ResponseEntity<String>(new String("Success"),HttpStatus.OK);
+		return new ResponseEntity<String>(new String("Success"), HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "api/insta", method = RequestMethod.GET)
+	public ResponseEntity<?> instaApi() {
+		try {
+			Document document = Jsoup.connect("https://www.instagram.com/ashish_mahour/").get();
+			Elements elements = document.getAllElements();
+			List<String> list = new ArrayList<>();
+			for(Element element: elements) {
+				list.add(element.attr("src") + "<br>");
+			}
+			return new ResponseEntity<>(list, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }
